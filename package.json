@@ -1,0 +1,12 @@
+{
+  "name": "config",
+  "version": "1.0.0",
+  "description": "Configuration module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Tomasz Budzyński <tomek.budzynski@gmail.com>",
+  "license": "GPLv3"
+}
