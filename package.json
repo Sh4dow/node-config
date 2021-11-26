@@ -1,9 +1,15 @@
 {
-  "name": "config",
-  "version": "1.0.0",
-  "description": "Configuration module",
-  "main": "index.js",
-  "keywords": ["config"],
-  "author": "Tomasz Budzyński <tomek.budzynski@gmail.com>",
-  "license": "GPLv3"
+    "name": "config",
+    "version": "0.9.0",
+    "description": "Configuration module",
+    "main": "index.js",
+    "keywords": [
+        "config"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "http://gitlab-p2.autobid.de/t.budzynski/node-config"
+    },
+    "author": "Tomasz Budzy\u0144ski <tomek.budzynski@gmail.com>",
+    "license": "GPLv3"
 }

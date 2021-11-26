@@ -1,0 +1,9 @@
+<?php
+// https://github.com/marcocesarato/php-conventional-changelog
+// composer require --dev marcocesarato/php-conventional-changelog
+
+return [
+    'tagPrefix' => '',
+    'ignoreTypes' => [],
+    'skipTag' => true
+];
