@@ -1,4 +1,7 @@
 const EventEmmiter = require('events');
+const { cwd } = require('process');
+const fs = require('fs');
+const path = require('path');
 
 class Config extends EventEmmiter
 {
@@ -8,7 +11,8 @@ class Config extends EventEmmiter
     options = {
         path: './config.json',
         envFiles: [],
-        envSwitch: 'NODE_ENV'
+        envSwitch: 'NODE_ENV',
+        env: ''
     }
 
     /**
@@ -34,22 +38,19 @@ class Config extends EventEmmiter
 
         this.options = Object.assign(this.options, options);
 
-        // console.log(this.options);
-
 
         if (process.env[this.options.envSwitch] != undefined
             && process.env[this.options.envSwitch].match(/^([a-zA-Z\d_]+)$/g)
         ) {
-            this.env = process.env[this.options.envSwitch];
+            this.options.env = process.env[this.options.envSwitch];
         }
 
         let config = this.#loadFile(this.options.path);
-        // console.log(config);
 
-        this.#configObject = this.#parseConfig(config, this.env);
+        this.#configObject = this.#parseConfig(config, this.options.env);
 
-        // this.#readEnv();
-        // this.#readCli();
+        this.#readEnv();
+        this.#readCli();
 
     }
 
@@ -91,6 +92,9 @@ class Config extends EventEmmiter
 
     #parseConfig(object, env) {
         let returnObject = {};
+        if (object === undefined) {
+            return returnObject;
+        }
         for(let index of Object.keys(object)) {
             switch(typeof object[index]) {
                 case 'object':
@@ -119,22 +123,52 @@ class Config extends EventEmmiter
      * @param {Object|String|Number|Boolean} value value of config node
      */
     set(name, value) {
-
         this.emit('change', diff);
+        this.#changeValue(name, value);
+    }
+
+    #changeValue(name, value, config) {
+
+        if (name.match(/\./)) {
+            let indexArray = name.split('.');
+            let index = indexArray.shift();
+            if (config[index] == undefined) {
+                config[index] = {};
+            }
+
+            if (typeof config[index] == 'object') {
+                this.#changeValue(indexArray.join('.'), value, config[index]);
+            } else if(indexArray.length > 0) {
+                console.error('You try to scalar value with object', indexArray);
+            }
+        } else {
+            config[name] = value;
+        }
     }
 
     #loadFile(file) {
-        let path = require('path');
-        console.log(path.parse(file).ext, file);
+
+        file = path.join(cwd(), file);
+        if (!fs.existsSync(file)) {
+            return console.error(`File missing: ${file}`);
+        }
+
         switch(path.parse(file).ext) {
             case '.json':
+                let str = fs.readFileSync(file);
+                try {
+                    return JSON.parse(str);
+                } catch(exception) {
+                    console.error(exception);
+                    return {};
+                }
             case '.js':
                 return require(file);
 
             case '.yaml':
             case '.yml':
                 const YAML = require('yaml');
-                const fs = require('fs');
+
                 return YAML.parse(
                     fs.readFileSync('./test/test.yml')
                         .toString()
@@ -143,17 +177,38 @@ class Config extends EventEmmiter
     }
 
     #readCli() {
+        let flag = '--config.';
         for (let arg of process.argv) {
-            if (arg.startsWith('--config.')) {
-                console.log(arg);
+            if (arg.startsWith(flag)) {
+                let [configName, value] = arg.replace(flag, '').split('=');
+                configName = configName.trim();
+                value = value.trim();
+                if (value === 'true') {
+                    value = true;
+                }
+                if (value === 'false') {
+                    value = false;
+                }
+                this.#changeValue(configName, value, this.#configObject);
             }
         }
     }
     #readEnv() {
-
+        let flag = 'NODE_CONFIG_';
         for (let arg of Object.keys(process.env)) {
-            if (arg.startsWith('NODE_CONFIG_')) {
-                console.log(process.env[arg]);
+            if (arg.startsWith(flag)) {
+                let configName = arg.replace(flag, '').replace('_', '.');
+                let value = process.env[arg];
+
+                configName = configName.trim();
+                value = value.trim();
+                if (value === 'true') {
+                    value = true;
+                }
+                if (value === 'false') {
+                    value = false;
+                }
+                this.#changeValue(configName, value, this.#configObject);
             }
         }
     }

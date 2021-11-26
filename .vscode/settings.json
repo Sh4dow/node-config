@@ -1,0 +1,3 @@
+{
+    "window.title": "NodeConfig${separator}${dirty}${activeEditorShort}${separator}${rootName}${separator}${appName}"
+}
