@@ -73,7 +73,7 @@ class Config extends EventEmmiter
             return undefined;
         }
         if (arr.length > 0) {
-            return get(object[index], arr.join('.'));
+            return this.#getValue(object[index], arr.join('.'));
         } else {
             return object[index];
         }
