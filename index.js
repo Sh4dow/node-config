@@ -9,7 +9,7 @@ class Config extends EventEmmiter
     #configObject = {};
 
     options = {
-        path: './config.json',
+        path: '',
         envFiles: [],
         envSwitch: 'NODE_ENV',
         env: ''
@@ -25,9 +25,20 @@ class Config extends EventEmmiter
         super();
 
         let options = {};
+        let config;
+
         if (arg.length == 2) {
-            let [path, options] = arg;
-            options.path = path;
+            if (typeof arg[0] == 'object' && typeof arg[1] == 'object') {
+                // config + options
+                // config = arg[0];
+                [config, options] = arg;
+            }
+            if (typeof arg[0] == 'string' && typeof arg[1] == 'object') {
+                // path + options
+                [path, options] = arg;
+                options.path = path;
+            }
+
         } else if (arg.length == 1) {
             if (typeof arg[0] === 'string') {
                 options.path = arg[0];
@@ -38,14 +49,13 @@ class Config extends EventEmmiter
 
         this.options = Object.assign(this.options, options);
 
-
         if (process.env[this.options.envSwitch] != undefined
             && process.env[this.options.envSwitch].match(/^([a-zA-Z\d_]+)$/g)
         ) {
             this.options.env = process.env[this.options.envSwitch];
         }
 
-        let config = this.#loadFile(this.options.path);
+        config = this.#loadFile(this.options.path);
 
         this.#configObject = this.#parseConfig(config, this.options.env);
 
@@ -98,10 +108,14 @@ class Config extends EventEmmiter
         for(let index of Object.keys(object)) {
             switch(typeof object[index]) {
                 case 'object':
-                    if (this.#objectEnvTest(object[index])) {
-                        returnObject[index] = this.#objectEnvValue(object[index], env);
+                    if (Array.isArray(object[index])) {
+                        returnObject[index] = object[index];
                     } else {
-                        returnObject[index] = this.#parseConfig(object[index], env);
+                        if (this.#objectEnvTest(object[index])) {
+                            returnObject[index] = this.#objectEnvValue(object[index], env);
+                        } else {
+                            returnObject[index] = this.#parseConfig(object[index], env);
+                        }
                     }
                     break;
 
@@ -170,7 +184,7 @@ class Config extends EventEmmiter
                 const YAML = require('yaml');
 
                 return YAML.parse(
-                    fs.readFileSync('./test/test.yml')
+                    fs.readFileSync(file)
                         .toString()
                 );
         }
