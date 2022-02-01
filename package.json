@@ -6,10 +6,19 @@
     "keywords": [
         "config"
     ],
+    "scripts": {
+        "test": "npx mocha --recursive ./test/ "
+    },
     "repository": {
         "type": "git",
         "url": "http://gitlab-p2.autobid.de/t.budzynski/node-config"
     },
-    "author": "Tomasz Budzy\u0144ski <tomek.budzynski@gmail.com>",
-    "license": "GPLv3"
+    "author": "Tomasz Budzyński <tomek.budzynski@gmail.com>",
+    "devDependencies": {
+        "mocha": "^9.1.3",
+        "unit.js": "^2.1.1"
+    },
+    "dependencies": {
+        "yaml": "^1.10.2"
+    }
 }

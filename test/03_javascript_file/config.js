@@ -1,0 +1,8 @@
+module.exports = {
+    name: 'name',
+    number: 10,
+    testArray: [1, 2, 3],
+    object: {
+        a: 1
+    }
+}
