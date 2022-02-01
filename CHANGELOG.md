@@ -4,6 +4,14 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [0.9.3](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.9.2...0.9.3) (2022-02-01)
+### Bug Fixes
+
+* Path veriable name colision ([fbc25d](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/fbc25d692f0ef0640db181b42c790d3364569dce))
+
+
+---
+
 ## [0.9.2](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.9.1...0.9.2) (2022-02-01)
 ### Bug Fixes
 

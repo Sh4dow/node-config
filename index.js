@@ -26,6 +26,7 @@ class Config extends EventEmmiter
 
         let options = {};
         let config;
+        let _path;
 
         if (arg.length == 2) {
             if (typeof arg[0] == 'object' && typeof arg[1] == 'object') {
@@ -35,8 +36,8 @@ class Config extends EventEmmiter
             }
             if (typeof arg[0] == 'string' && typeof arg[1] == 'object') {
                 // path + options
-                [path, options] = arg;
-                options.path = path;
+                [_path, options] = arg;
+                options.path = _path;
             }
 
         } else if (arg.length == 1) {
