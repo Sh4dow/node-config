@@ -75,7 +75,7 @@ config.get('logLevel'); // info
 ```
 
 ## Single config with platform changes
-Replacing value with object You can change single.
+Replacing value with object You can change single value.
 ```json
 {
     "index": {
