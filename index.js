@@ -59,9 +59,39 @@ class Config extends EventEmmiter
         config = this.#loadFile(this.options.path);
         this.#configObject = this.#parseConfig(config, this.options.env);
 
+        if (Array.isArray(this.options.envFiles) && this.options.envFiles.length > 0) {
+            let regex = new RegExp('^'+this.options.env, 'i');
+            //load secont config
+            for (let singleFile of this.options.envFiles) {
+                if (path.basename(singleFile).match(regex) !== null) {
+                    let config = this.#loadFile(singleFile);
+                    this.#configObject = this.#merge(this.#configObject, config);
+                }
+            }
+        }
+
         this.#readEnv();
         this.#readCli();
 
+    }
+
+    #merge(target, source) {
+        let test = Object.keys(source).filter((value => {
+            return (
+                typeof source[value] === 'object' &&
+                !Array.isArray(source[value])
+            );
+        }));
+
+        if (test.length > 0 ) {
+            for (let index of test) {
+                let config = this.#merge(target[index], source[index]);
+                target[index] = {...target[index], ...config};
+            }
+            return target;
+        } else {
+            return { ...target, ...source };
+        }
     }
 
     /**
