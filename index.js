@@ -57,7 +57,6 @@ class Config extends EventEmmiter
         }
 
         config = this.#loadFile(this.options.path);
-
         this.#configObject = this.#parseConfig(config, this.options.env);
 
         this.#readEnv();
@@ -70,11 +69,15 @@ class Config extends EventEmmiter
      * @param {String|null} configName variable name
      * @returns {Object|String|Number|Boolean}
      */
-    get(configName = null) {
+    get(configName = null, defaultValue = null) {
         if (configName === null) {
             return this.#configObject;
         }
-        return this.#getValue(this.#configObject, configName);
+        let value = this.#getValue(this.#configObject, configName);
+        if (value === undefined) {
+            return defaultValue;
+        }
+        return value;
     }
 
     #getValue(object, configName) {
