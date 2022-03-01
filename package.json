@@ -1,6 +1,6 @@
 {
     "name": "config",
-    "version": "0.9.3",
+    "version": "0.10.0",
     "description": "Configuration module",
     "main": "index.js",
     "keywords": [
@@ -11,7 +11,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "http://gitlab-p2.autobid.de/t.budzynski/node-config"
+        "url": "https://github.com/Sh4dow/node-config"
     },
     "author": "Tomasz Budzy\u0144ski <tomek.budzynski@gmail.com>",
     "devDependencies": {
