@@ -4,6 +4,18 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [0.10.0](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.9.3...0.10.0) (2022-03-01)
+### Features
+
+* Default value for getting value ([7e6bb3](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/7e6bb3036e1e7e35f3109f32c322d99f640563d0))
+
+### Bug Fixes
+
+* Not working enviroment files ([3c8010](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/3c80106f3d525643a914b81ffda120d7a78cb304))
+
+
+---
+
 ## [0.9.3](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.9.2...0.9.3) (2022-02-01)
 ### Bug Fixes
 
