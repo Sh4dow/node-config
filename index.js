@@ -56,6 +56,7 @@ class Config extends EventEmmiter
             this.options.env = process.env[this.options.envSwitch];
         }
 
+        this.options.path = path.relative(require.main.path, this.options.path);
         config = this.#loadFile(this.options.path);
         this.#configObject = this.#parseConfig(config, this.options.env);
 
@@ -64,7 +65,8 @@ class Config extends EventEmmiter
             //load secont config
             for (let singleFile of this.options.envFiles) {
                 if (path.basename(singleFile).match(regex) !== null) {
-                    let config = this.#loadFile(singleFile);
+                    let file = path.relative(require.main.path, singleFile);
+                    let config = this.#loadFile(file);
                     this.#configObject = this.#merge(this.#configObject, config);
                 }
             }
