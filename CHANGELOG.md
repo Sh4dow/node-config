@@ -4,6 +4,14 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [0.10.1](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.10.0...0.10.1) (2022-03-08)
+### Bug Fixes
+
+* Relative path ([de313d](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/de313dff1054888a77397c924491cded328e0be0))
+
+
+---
+
 ## [0.10.0](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.9.3...0.10.0) (2022-03-01)
 ### Features
 
