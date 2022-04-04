@@ -232,59 +232,76 @@ class Config extends EventEmmiter
             if (arg.startsWith(flag)) {
                 let [configName, value] = arg.replace(flag, '').split('=');
                 configName = configName.trim();
-                value = value.trim();
-                if (value === 'true') {
-                    value = true;
-                }
-                if (value === 'false') {
-                    value = false;
-                }
+
+                value = this.fixValue(value);
+
                 this.#changeValue(configName, value, this.#configObject);
             }
         }
     }
 
+    cliPrefix = 'NODE_CONFIG_';
+
     #readEnv() {
-        let flag = 'NODE_CONFIG_';
+
         for (let arg of Object.keys(process.env)) {
-            if (arg.startsWith(flag)) {
-                let configName = arg.replace(flag, '').replace('_', '.');
-                let lowerConfigName = configName.toLowerCase(); //lower name
-                let vars = lowerConfigName.split('.'); // array of config name for iteration and fing config node
-
-                let configReference = this.#configObject; // reference to config object
-                let configNamePath = [];
-
-                for (let a = 0; a < lowerConfigName.length; a++) {
-                    for (let index of Object.keys(configReference)) {
-                        if (index.toLowerCase() === vars[a]) { // found matching index
-                            configNamePath.push(index);
-                            configReference = configReference[index];
-                            break;
-                        }
-                    }
-                }
-
-                console.log(configNamePath);
-
-                let value = process.env[arg];
-
-                value = value.trim();
-                if (value.match(/^[0-9]+$/)) {
-                    value = parseInt(value);
-                } else if (value.match(/^[0-9]+\.[0-9]+$/)) {
-                    value = parseFloat(value);
-                } else if (value === 'true') {
-                    value = true;
-                } else if (value === 'false') {
-                    value = false;
-                }
+            if (arg.startsWith(this.cliPrefix)) {
+                let configNamePath = this.envVariable(arg)
 
                 if (configNamePath.length > 0) {
+                    let value = this.fixValue(process.env[arg]);
                     this.#changeValue(configNamePath.join('.'), value, this.#configObject);
                 }
             }
         }
+    }
+
+    /**
+     * find path to config node
+     *
+     * @param {string} arg enviroment variable name
+     * @returns {Array <String>} path of config node
+     */
+    envVariable(arg) {
+
+        let configName = arg.replace(this.cliPrefix, '').replace('_', '.');
+        let lowerConfigName = configName.toLowerCase(); //lower name
+        let vars = lowerConfigName.split('.'); // array of config name for iteration and fing config node
+
+        let configReference = this.#configObject; // reference to config object
+        let configNamePath = [];
+
+        for (let a = 0; a < lowerConfigName.length; a++) {
+            for (let index of Object.keys(configReference)) {
+                if (index.toLowerCase() === vars[a]) { // found matching index
+                    configNamePath.push(index);
+                    configReference = configReference[index];
+                    break;
+                }
+            }
+        }
+
+        return  configNamePath
+    }
+
+    /**
+     * cast value to type
+     *
+     * @param {string} value value of config node
+     * @returns {string|number|boolean} casted value
+     */
+    fixValue(value) {
+        value = value.trim();
+        if (value.match(/^[0-9]+$/)) {
+            value = parseInt(value);
+        } else if (value.match(/^[0-9]+\.[0-9]+$/)) {
+            value = parseFloat(value);
+        } else if (value === 'true') {
+            value = true;
+        } else if (value === 'false') {
+            value = false;
+        }
+        return value;
     }
 }
 
