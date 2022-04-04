@@ -243,22 +243,46 @@ class Config extends EventEmmiter
             }
         }
     }
+
     #readEnv() {
         let flag = 'NODE_CONFIG_';
         for (let arg of Object.keys(process.env)) {
             if (arg.startsWith(flag)) {
                 let configName = arg.replace(flag, '').replace('_', '.');
+                let lowerConfigName = configName.toLowerCase(); //lower name
+                let vars = lowerConfigName.split('.'); // array of config name for iteration and fing config node
+
+                let configReference = this.#configObject; // reference to config object
+                let configNamePath = [];
+
+                for (let a = 0; a < lowerConfigName.length; a++) {
+                    for (let index of Object.keys(configReference)) {
+                        if (index.toLowerCase() === vars[a]) { // found matching index
+                            configNamePath.push(index);
+                            configReference = configReference[index];
+                            break;
+                        }
+                    }
+                }
+
+                console.log(configNamePath);
+
                 let value = process.env[arg];
 
-                configName = configName.trim();
                 value = value.trim();
-                if (value === 'true') {
+                if (value.match(/^[0-9]+$/)) {
+                    value = parseInt(value);
+                } else if (value.match(/^[0-9]+\.[0-9]+$/)) {
+                    value = parseFloat(value);
+                } else if (value === 'true') {
                     value = true;
-                }
-                if (value === 'false') {
+                } else if (value === 'false') {
                     value = false;
                 }
-                this.#changeValue(configName, value, this.#configObject);
+
+                if (configNamePath.length > 0) {
+                    this.#changeValue(configNamePath.join('.'), value, this.#configObject);
+                }
             }
         }
     }
