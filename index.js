@@ -56,8 +56,12 @@ class Config extends EventEmmiter
             this.options.env = process.env[this.options.envSwitch];
         }
 
-        this.options.path = path.relative(require.main.path, this.options.path);
+        if (!this.options.path.startsWith('/')) {
+            this.options.path = path.relative(require.main.path, this.options.path);
+        }
+
         config = this.#loadFile(this.options.path);
+
         this.#configObject = this.#parseConfig(config, this.options.env);
 
         if (Array.isArray(this.options.envFiles) && this.options.envFiles.length > 0) {
@@ -198,7 +202,6 @@ class Config extends EventEmmiter
 
     #loadFile(file) {
 
-        file = path.join(cwd(), file);
         if (!fs.existsSync(file)) {
             return console.error(`File missing: ${file}`);
         }
