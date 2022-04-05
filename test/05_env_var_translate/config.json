@@ -1,0 +1,7 @@
+{
+    "lowwer": 12,
+    "camelCase": 10,
+    "nested": {
+        "var": "abc"
+    }
+}
