@@ -123,9 +123,9 @@ $ node index.js --config.loglevel=info --config.database.host=test.host.com --co
 }
 ```
 
-Enviroment variable has disadvantage. Config can't have underscore "`_`"
+Enviroment variable has disadvantage. Config can't have underscore "`_`" on names
 ```
-$ NODE_CONFIG_logLevel=warning NODE_CONFIG_database_host=example.com node index.js
+$ NODE_CONFIG_LOGLEVEL=warning NODE_CONFIG_DATABASE_HOST=example.com node index.js
 
 {
     "database": {
