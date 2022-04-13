@@ -1,7 +1,7 @@
 const test = require('unit.js')
 const Config = require('../../');
 
-let cfg = new Config('./test/03_javascript_file/config.js');
+let cfg = new Config(__dirname + '/config.js');
 
 it('Check Javasctip file config values', () => {
     test.string(cfg.get('name')).is('name');

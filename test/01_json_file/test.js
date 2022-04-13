@@ -2,7 +2,7 @@ const test = require('unit.js')
 const path = require('path');
 const Config = require('../../');
 
-let cfg = new Config('./test/01_json_file/config.json');
+let cfg = new Config(__dirname + '/config.json');
 
 it('Check JSON file config values', () => {
     test.string(cfg.get('name')).is('name');

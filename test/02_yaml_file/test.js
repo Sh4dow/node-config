@@ -1,7 +1,7 @@
 const test = require('unit.js')
 const Config = require('../../');
 
-let cfg = new Config('./test/02_yaml_file/config.yml');
+let cfg = new Config(__dirname + '/config.yml');
 
 it('Check YAML file config values', () => {
     test.string(cfg.get('name')).is('name');

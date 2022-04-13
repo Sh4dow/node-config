@@ -56,8 +56,12 @@ class Config extends EventEmmiter
             this.options.env = process.env[this.options.envSwitch];
         }
 
-        this.options.path = path.relative(require.main.path, this.options.path);
+        if (!this.options.path.startsWith('/')) {
+            this.options.path = path.relative(require.main.path, this.options.path);
+        }
+
         config = this.#loadFile(this.options.path);
+
         this.#configObject = this.#parseConfig(config, this.options.env);
 
         if (Array.isArray(this.options.envFiles) && this.options.envFiles.length > 0) {
@@ -198,7 +202,6 @@ class Config extends EventEmmiter
 
     #loadFile(file) {
 
-        file = path.join(cwd(), file);
         if (!fs.existsSync(file)) {
             return console.error(`File missing: ${file}`);
         }
@@ -232,35 +235,76 @@ class Config extends EventEmmiter
             if (arg.startsWith(flag)) {
                 let [configName, value] = arg.replace(flag, '').split('=');
                 configName = configName.trim();
-                value = value.trim();
-                if (value === 'true') {
-                    value = true;
-                }
-                if (value === 'false') {
-                    value = false;
-                }
+
+                value = this.fixValue(value);
+
                 this.#changeValue(configName, value, this.#configObject);
             }
         }
     }
-    #readEnv() {
-        let flag = 'NODE_CONFIG_';
-        for (let arg of Object.keys(process.env)) {
-            if (arg.startsWith(flag)) {
-                let configName = arg.replace(flag, '').replace('_', '.');
-                let value = process.env[arg];
 
-                configName = configName.trim();
-                value = value.trim();
-                if (value === 'true') {
-                    value = true;
+    cliPrefix = 'NODE_CONFIG_';
+
+    #readEnv() {
+
+        for (let arg of Object.keys(process.env)) {
+            if (arg.startsWith(this.cliPrefix)) {
+                let configNamePath = this.envVariable(arg)
+
+                if (configNamePath.length > 0) {
+                    let value = this.fixValue(process.env[arg]);
+                    this.#changeValue(configNamePath.join('.'), value, this.#configObject);
                 }
-                if (value === 'false') {
-                    value = false;
-                }
-                this.#changeValue(configName, value, this.#configObject);
             }
         }
+    }
+
+    /**
+     * find path to config node
+     *
+     * @param {string} arg enviroment variable name
+     * @returns {Array <String>} path of config node
+     */
+    envVariable(arg) {
+
+        let configName = arg.replace(this.cliPrefix, '').replace('_', '.');
+        let lowerConfigName = configName.toLowerCase(); //lower name
+        let vars = lowerConfigName.split('.'); // array of config name for iteration and fing config node
+
+        let configReference = this.#configObject; // reference to config object
+        let configNamePath = [];
+
+        for (let a = 0; a < lowerConfigName.length; a++) {
+            for (let index of Object.keys(configReference)) {
+                if (index.toLowerCase() === vars[a]) { // found matching index
+                    configNamePath.push(index);
+                    configReference = configReference[index];
+                    break;
+                }
+            }
+        }
+
+        return  configNamePath
+    }
+
+    /**
+     * cast value to type
+     *
+     * @param {string} value value of config node
+     * @returns {string|number|boolean} casted value
+     */
+    fixValue(value) {
+        value = value.trim();
+        if (value.match(/^[0-9]+$/)) {
+            value = parseInt(value);
+        } else if (value.match(/^[0-9]+\.[0-9]+$/)) {
+            value = parseFloat(value);
+        } else if (value === 'true') {
+            value = true;
+        } else if (value === 'false') {
+            value = false;
+        }
+        return value;
     }
 }
 
