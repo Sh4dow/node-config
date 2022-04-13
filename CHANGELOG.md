@@ -4,6 +4,27 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [0.10.2](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.10.1...0.10.2) (2022-04-13)
+### Bug Fixes
+
+* Absolute file path was treated as relative ([0a9d70](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/0a9d70c21b5a38e009b4994e410611a6573a953f))
+* Enviroment valiable are now case insensitive ([91c8cb](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/91c8cb039f2202b74d393a7796200cee0d4372b1))
+
+### Code Refactoring
+
+* Enviroment variables changes ([6310ad](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/6310adaa71266d42925edc4bce8352d93353aa6b))
+
+### Tests
+
+* Translate test for env variable ([49c1da](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/49c1dafba27ea9a13dcdfeb02914c093523f562f))
+
+### Documentation
+
+* Update ([f156f8](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/f156f8245b4692c34054711401d083d643bf207b))
+
+
+---
+
 ## [0.10.1](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.10.0...0.10.1) (2022-03-08)
 ### Bug Fixes
 
