@@ -1,5 +1,5 @@
 {
-    "name": "config",
+    "name": "@sh4dow/config",
     "version": "0.10.2",
     "description": "Configuration module",
     "main": "index.js",
