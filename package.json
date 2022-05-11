@@ -1,6 +1,6 @@
 {
     "name": "@sh4dow/config",
-    "version": "0.10.2",
+    "version": "0.10.3",
     "description": "Configuration module",
     "main": "index.js",
     "keywords": [

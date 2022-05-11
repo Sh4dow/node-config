@@ -4,6 +4,18 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [0.10.3](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.10.2...0.10.3) (2022-05-11)
+### Bug Fixes
+
+* Wrong filepath when executing from cli with external location ([0a757b](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/0a757b8f5b2b50bf18ded3154f13f42aa7e3965d))
+
+### Builds
+
+* Change package name before publish on npm ([2afe49](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/2afe49d068b88385b694493bfdbcb763dab52102))
+
+
+---
+
 ## [0.10.2](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.10.1...0.10.2) (2022-04-13)
 ### Bug Fixes
 
