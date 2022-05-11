@@ -57,7 +57,7 @@ class Config extends EventEmmiter
         }
 
         if (!this.options.path.startsWith('/')) {
-            this.options.path = path.relative(require.main.path, this.options.path);
+            this.options.path = path.resolve(require.main.path, this.options.path);
         }
 
         config = this.#loadFile(this.options.path);
@@ -69,7 +69,7 @@ class Config extends EventEmmiter
             //load secont config
             for (let singleFile of this.options.envFiles) {
                 if (path.basename(singleFile).match(regex) !== null) {
-                    let file = path.relative(require.main.path, singleFile);
+                    let file = path.resolve(require.main.path, singleFile);
                     let config = this.#loadFile(file);
                     this.#configObject = this.#merge(this.#configObject, config);
                 }
