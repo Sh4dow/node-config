@@ -177,11 +177,10 @@ class Config extends EventEmmiter
      * @param {Object|String|Number|Boolean} value value of config node
      */
     set(name, value) {
-        this.emit('change', diff);
         this.#changeValue(name, value);
     }
 
-    #changeValue(name, value, config) {
+    #changeValue(name, value, config = this.#configObject) {
 
         if (name.match(/\./)) {
             let indexArray = name.split('.');
@@ -238,7 +237,7 @@ class Config extends EventEmmiter
 
                 value = this.fixValue(value);
 
-                this.#changeValue(configName, value, this.#configObject);
+                this.#changeValue(configName, value);
             }
         }
     }
@@ -253,7 +252,7 @@ class Config extends EventEmmiter
 
                 if (configNamePath.length > 0) {
                     let value = this.fixValue(process.env[arg]);
-                    this.#changeValue(configNamePath.join('.'), value, this.#configObject);
+                    this.#changeValue(configNamePath.join('.'), value);
                 }
             }
         }

@@ -4,6 +4,14 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [0.10.4](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.10.3...0.10.4) (2022-11-07)
+### Bug Fixes
+
+* ChangeValue ([b823fe](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/b823feed9ab7bddb100abadb5c8eb31e55e67fa7))
+
+
+---
+
 ## [0.10.3](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.10.2...0.10.3) (2022-05-11)
 ### Bug Fixes
 
