@@ -1,0 +1,5 @@
+make[1]: Entering directory '/home/tb/service/node-config'
+git log `git describe --tags --abbrev=0`..HEAD --format=" * [ %h ] %s (%cn)" --reverse
+ * [ 2ed0abd ] Merge tag '0.10.4' into develop (Tomasz Budzyński)
+ * [ 4c08852 ] fix: #1 null values are not accepted (Tomasz Budzyński)
+make[1]: Leaving directory '/home/tb/service/node-config'
