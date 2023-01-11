@@ -4,6 +4,14 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [0.10.5](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.10.4...0.10.5) (2023-01-11)
+### Bug Fixes
+
+* #1 null values are not accepted ([4c0885](https://gitlab-p2.autobid.de/t.budzynski/node-config/commit/4c0885257796fcf42c79a09b76749d54206b309b))
+
+
+---
+
 ## [0.10.4](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.10.3...0.10.4) (2022-11-07)
 ### Bug Fixes
 

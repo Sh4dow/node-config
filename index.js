@@ -148,7 +148,7 @@ class Config extends EventEmmiter
         for(let index of Object.keys(object)) {
             switch(typeof object[index]) {
                 case 'object':
-                    if (Array.isArray(object[index])) {
+                    if (Array.isArray(object[index]) || object[index] === null) {
                         returnObject[index] = object[index];
                     } else {
                         if (this.#objectEnvTest(object[index])) {
