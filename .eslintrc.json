@@ -56,8 +56,6 @@
       }
     ],
     "import/no-cycle": 2,
-    "import/prefer-default-export": 2,
-    "import/no-extraneous-dependencies": 2,
     "import/no-unresolved": 2,
     "import/order": [
       "error",
@@ -238,7 +236,7 @@
         ]
       }
     ],
-    "@typescript-eslint/no-var-requires": 2,
+    "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/prefer-nullish-coalescing": 2,
     "@typescript-eslint/semi": [
       "error"

@@ -3,6 +3,7 @@
     "target": "es2022",
     "module": "NodeNext",
     "types": [
+      "mocha",
       "node"
     ],
     "lib": [
@@ -15,7 +16,7 @@
     "alwaysStrict": true,
     "baseUrl": "./src",
     "checkJs": false,
-    "declaration": false,
+    "declaration": true,
     "declarationMap": false,
     "downlevelIteration": true,
     "emitDecoratorMetadata": true,

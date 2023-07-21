@@ -24,7 +24,7 @@ export default class Config extends EventEmmiter {
    *
    * returns (Config) config handler
    */
-  constructor(configTarget: string | Record<string, unknown>, configOptions: IConfigOptions) {
+  constructor(configTarget: string | Record<string, unknown>, configOptions?: IConfigOptions) {
     super();
 
     let options: IConfigOptions = { envSwitch: 'NODE_ENV' };
@@ -46,45 +46,7 @@ export default class Config extends EventEmmiter {
     }
 
     this.options = Object.assign(this.options, options);
-
-    if (
-      // eslint-disable-next-line eqeqeq
-      process.env[this.options.envSwitch]?.match(/^([a-zA-Z\d_]+)$/g)
-    ) {
-      this.options.env = process.env[this.options.envSwitch];
-    }
-
-    if (!this.options.path?.startsWith('/')) {
-      this.options.path = path.resolve(require.main!.path, this.options.path!);
-    }
-
-    this.loadFile(this.options.path)
-      .then((config) => {
-        this.configObject = this.parseConfig(config, this.options.env!);
-      })
-      .catch((err) => {
-        console.error('Cannot import js file', err);
-      });
-
-    if (Array.isArray(this.options.envFiles) && this.options.envFiles.length > 0) {
-      const regex = new RegExp(`^${this.options.env!}`, 'i');
-      // load second config
-      for (const singleFile of this.options.envFiles) {
-        if (path.basename(singleFile).match(regex) !== null) {
-          const file = path.resolve(require.main!.path, singleFile);
-          this.loadFile(file)
-            .then((config) => {
-              this.configObject = this.merge(this.configObject, config);
-            })
-            .catch((err) => {
-              console.error('Cannot import js file', err);
-            });
-        }
-      }
-    }
-
-    this.readEnv();
-    this.readCli();
+    this.initFiles();
   }
 
   /**
@@ -95,7 +57,7 @@ export default class Config extends EventEmmiter {
    *
    * @returns {Object|String|Number|Boolean}
    */
-  get(configName = null, defaultValue = null): unknown {
+  get(configName: string | null = null, defaultValue = null): unknown {
     if (configName === null) {
       return this.configObject;
     }
@@ -168,6 +130,39 @@ export default class Config extends EventEmmiter {
       parsedValue = false;
     }
     return parsedValue;
+  }
+
+  /**
+   * Initialize config files
+   *
+   * returns (void)
+   */
+  private initFiles(): void {
+    if (process.env[this.options.envSwitch]?.match(/^([a-zA-Z\d_]+)$/g)) {
+      this.options.env = process.env[this.options.envSwitch];
+    }
+
+    if (!this.options.path?.startsWith('/')) {
+      this.options.path = path.resolve(require.main!.path, this.options.path!);
+    }
+
+    const config = this.loadFile(this.options.path);
+    this.configObject = this.parseConfig(config, this.options.env!);
+
+    if (Array.isArray(this.options.envFiles) && this.options.envFiles.length > 0) {
+      const regex = new RegExp(`^${this.options.env!}`, 'i');
+      // load second config
+      for (const singleFile of this.options.envFiles) {
+        if (path.basename(singleFile).match(regex) !== null) {
+          const file = path.resolve(require.main!.path, singleFile);
+          const config = this.loadFile(file);
+          this.configObject = this.merge(this.configObject, config);
+        }
+      }
+    }
+
+    this.readEnv();
+    this.readCli();
   }
 
   /**
@@ -312,7 +307,7 @@ export default class Config extends EventEmmiter {
    *
    * @returns {unknown} Loaded file
    */
-  private async loadFile(file: string): Promise<Record<string, unknown>> {
+  private loadFile(file: string): Record<string, unknown> {
     if (!fs.existsSync(file)) {
       console.error(`File missing: ${file}`);
       return {};
@@ -327,7 +322,7 @@ export default class Config extends EventEmmiter {
           return {};
         }
       case '.js':
-        return (await import(file)) as unknown as Record<string, unknown>;
+        return require(file) as unknown as Record<string, unknown>;
 
       case '.yaml':
       case '.yml':
