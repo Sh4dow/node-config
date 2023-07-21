@@ -1,0 +1,62 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "NodeNext",
+    "types": [
+      "node"
+    ],
+    "lib": [
+      "ES6",
+      "ESNext"
+    ],
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "allowUmdGlobalAccess": true,
+    "alwaysStrict": true,
+    "baseUrl": "./src",
+    "checkJs": false,
+    "declaration": false,
+    "declarationMap": false,
+    "downlevelIteration": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "exactOptionalPropertyTypes": false,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "incremental": false,
+    "inlineSources": false,
+    "inlineSourceMap": true,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "noEmit": false,
+    "noEmitOnError": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "preserveSymlinks": true,
+    "pretty": true,
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "sourceMap": false,
+    "useDefineForClassFields": true
+  },
+  "include": [
+    "**/*"
+  ]
+}
+
