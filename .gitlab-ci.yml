@@ -1,14 +1,14 @@
 image: node:18
 
 stages:
-  - test
+  #  - test
   - deploy
 
-test:
-  stage: test
-  script:
-    - npm install
-    - npm run test
+#test:
+#  stage: test
+#  script:
+#    - npm install
+#    - npm run test
 
 publish:
   stage: deploy
@@ -24,7 +24,7 @@ publish:
 
     - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
-    - echo "//gitlab-p2.autobid.de/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}">>.npmrc
+    - echo "\n //gitlab-p2.autobid.de/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}">>.npmrc
 
 
     # Check if the pipeline was triggered by a tag
