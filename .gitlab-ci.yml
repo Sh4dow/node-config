@@ -22,12 +22,7 @@ publish:
           exit 1
       fi
 
-    # Configure npm to use the custom registry
-    - npm config set @gitlab-p2.autobid.de:registry https://gitlab-p2.autobid.de/api/v4/packages/npm/
-    - npm config set //gitlab-p2.autobid.de/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}
-
-    # Authenticate npm with the custom registry using CI_JOB_TOKEN
-    - echo "//gitlab-p2.autobid.de/api/v4/packages/npm/:_authToken=${CI_JOB_TOKEN}" > .npmrc
+    - echo "//gitlab-p2.autobid.de/api/v4/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - echo "//gitlab-p2.autobid.de/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
 
     # Check if the pipeline was triggered by a tag
