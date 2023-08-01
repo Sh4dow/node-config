@@ -23,9 +23,9 @@ publish:
       fi
 
     # Authenticate npm with the custom registry
-    - npm config set @banana:registry https://gitlab-banana.pl/api/v4/packages/npm/
-    - echo "//gitlab-banana.pl/api/v4/packages/npm/:_authToken=${CI_JOB_TOKEN}" > .npmrc
-    - echo "//gitlab-banana.pl/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - npm config set @devesoft:registry https://gitlab-p2.autobid.de/api/v4/packages/npm/
+    - echo "//gitlab-p2.autobid.de/api/v4/packages/npm/:_authToken=${CI_JOB_TOKEN}" > .npmrc
+    - echo "//gitlab-p2.autobid.de/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" > .npmrc
 
 
     # Check if the pipeline was triggered by a tag
