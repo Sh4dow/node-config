@@ -22,11 +22,8 @@ publish:
           exit 1
       fi
 
-    # Is npm version buggy and not working with custom repos?
-    - npm install -g npm@7
-
     # Configure npm to use the custom registry
-    - npm config set @devesoft:registry https://gitlab-p2.autobid.de/api/v4/packages/npm/
+    - npm config set @gitlab-p2.autobid.de:registry https://gitlab-p2.autobid.de/api/v4/packages/npm/
     - npm config set //gitlab-p2.autobid.de/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}
 
     # Authenticate npm with the custom registry using CI_JOB_TOKEN
@@ -36,6 +33,6 @@ publish:
     # Check if the pipeline was triggered by a tag
     - |
       if [[ "${CI_COMMIT_TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-.*)?$ ]]; then
-        npm publish --verbos
+        npm publish --verbose
         echo "Published version ${CI_COMMIT_TAG} new version to gitlab repository"
       fi

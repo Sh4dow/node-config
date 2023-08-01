@@ -9,7 +9,7 @@
     "/lib"
   ],
   "publishConfig": {
-    "@devesoft:registry": "https://gitlab-p2.autobid.de/api/v4/projects/228/packages/npm/"
+    "@gitlab-p2.autobid.de:registry": "https://gitlab-p2.autobid.de/api/v4/projects/228/packages/npm/"
   },
   "keywords": [
     "config"
