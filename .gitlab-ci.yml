@@ -22,8 +22,7 @@ publish:
           exit 1
       fi
 
-    - echo "//gitlab-p2.autobid.de/api/v4/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - echo "//gitlab-p2.autobid.de/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - echo '//gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}'>.npmrc
       
       echo "Logging file"
       cat .npmrc
