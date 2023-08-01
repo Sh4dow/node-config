@@ -22,14 +22,15 @@ publish:
           exit 1
       fi
 
-    - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}">.npmrc
-      
-      echo "Logging file"
-      cat .npmrc
+    - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
+
+    - echo "//gitlab-p2.autobid.de/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}">>.npmrc
+
 
     # Check if the pipeline was triggered by a tag
     - |
       if [[ "${CI_COMMIT_TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-.*)?$ ]]; then
+        npm dist-tag add @gitlab-p2.autobid.de/config@${NPM_PACKAGE_VERSION} ${CI_COMMIT_TAG}
         npm publish --verbose
         echo "Published version ${CI_COMMIT_TAG} new version to gitlab repository"
       fi
