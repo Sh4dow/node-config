@@ -1,5 +1,5 @@
 {
-  "name": "@sh4dow/config",
+  "name": "@gitlab-p2.autobid.de/config",
   "version": "0.10.5",
   "description": "Configuration module",
   "author": "Tomasz Budzyński <tomek.budzynski@gmail.com>",
@@ -8,9 +8,6 @@
   "files": [
     "/lib"
   ],
-  "publishConfig": {
-    "@gitlab-p2.autobid.de:registry": "https://gitlab-p2.autobid.de/api/v4/projects/228/packages/npm/"
-  },
   "keywords": [
     "config"
   ],
