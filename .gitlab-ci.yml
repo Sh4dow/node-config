@@ -1,8 +1,19 @@
 image: node:18
 
 stages:
+  - build
   - test
   - deploy
+
+
+build:
+  stage: build
+  artifacts:
+    paths:
+      - lib
+  script:
+    - npm install
+    - npm run build
 
 test:
   stage: test
@@ -12,21 +23,11 @@ test:
 
 publish:
   stage: deploy
-  rules:
-    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+.*$/'
+  only:
+    - tags
+    - /^\d+.\d+.\d+$/
   script:
-    # If no .npmrc is included in the repo, throw an error
-    - |
-      if [[ ! -f .npmrc ]]; then
-          echo 'No .npmrc found! Please create a .npmrc file in your repository.'
-          exit 1
-      fi
-
+    - echo "@devesoft:registry=https://gitlab-p2.autobid.de/api/v4/projects/${CI_PROJECT_ID}/packages/npm/" > .npmrc
     - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-
-    # Check if the pipeline was triggered by a tag
-    - |
-      if [[ "${CI_COMMIT_TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-.*)?$ ]]; then
-        npm publish --verbose
-        echo "Published version ${CI_COMMIT_TAG} new version to gitlab repository"
-      fi
+    - cat .npmrc
+    - npm publish
