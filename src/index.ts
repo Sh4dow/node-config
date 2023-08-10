@@ -143,7 +143,7 @@ export default class Config extends EventEmmiter {
         }
 
         if (!this.options.path?.startsWith('/')) {
-            this.options.path = path.resolve(process.env.PWD!, this.options.path!);
+            this.options.path = path.resolve(process.env.PWD ?? require.main!.path, this.options.path!);
         }
 
         const config = this.loadFile(this.options.path);
