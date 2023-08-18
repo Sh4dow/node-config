@@ -1,6 +1,6 @@
 {
   "name": "@devesoft/config",
-  "version": "0.10.5",
+  "version": "0.10.7",
   "description": "Configuration module",
   "author": "Tomasz Budzyński <tomek.budzynski@gmail.com>",
   "main": "lib/index.js",
@@ -15,7 +15,7 @@
     "prebuild": "npm run lint",
     "build": "tsc -p tsconfig.release.json",
     "build:watch": "tsc -w -p tsconfig.release.json",
-    "lint": "NODE_ENV=development eslint . --ext .ts --fix",
+    "lint": "eslint . --ext .ts --fix",
     "listErrors": "node_modules/.bin/tsc --skipLibCheck",
     "test": "npx mocha --config mocha.config.js"
   },
