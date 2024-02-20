@@ -32,6 +32,7 @@ export default class Config extends EventEmmiter {
         if (configTarget && configOptions) {
             if (typeof configTarget === 'object' && typeof configOptions === 'object') {
                 options = configOptions;
+                options.object = configTarget;
             }
             if (typeof configTarget === 'string' && typeof configOptions === 'object') {
                 options = configOptions;
@@ -148,6 +149,10 @@ export default class Config extends EventEmmiter {
 
         const config = this.loadFile(this.options.path);
         this.configObject = this.parseConfig(config, this.options.env!);
+
+        if(this.options.object) {
+            this.configObject = this.options.object;
+        }
 
         if (Array.isArray(this.options.envFiles) && this.options.envFiles.length > 0) {
             const regex = new RegExp(`^${this.options.env!}`, 'i');
