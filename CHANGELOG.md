@@ -4,6 +4,18 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [0.11.0](https://gitlab-p2.autobid.de/node/config/compare/0.10.8...0.11.0) (2024-12-05)
+### Features
+
+* Add cli env prefix option to configuration ([b13f18](https://gitlab-p2.autobid.de/node/config/commit/b13f1849fb6833cc21077a549cafab967d4d584e))
+
+### Builds
+
+* Add makefile scripts for versioning ([c0d14e](https://gitlab-p2.autobid.de/node/config/commit/c0d14ef179e27a97fa0011927e699ebd3aeeeb0b))
+
+
+---
+
 ## [0.10.5](https://gitlab-p2.autobid.de/t.budzynski/node-config/compare/0.10.4...0.10.5) (2023-01-11)
 ### Bug Fixes
 
