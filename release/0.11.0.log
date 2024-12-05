@@ -1,0 +1,4 @@
+make[1]: Entering directory '/home/tb/service/node/config'
+ * [ b13f184 ] feat: add cli env prefix option to configuration (Tomasz Budzyński)
+ * [ c0d14ef ] build: add makefile scripts for versioning (Tomasz Budzyński)
+make[1]: Leaving directory '/home/tb/service/node/config'

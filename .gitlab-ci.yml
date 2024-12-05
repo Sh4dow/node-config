@@ -1,0 +1,33 @@
+image: node:18
+
+stages:
+  - build
+  - test
+  - deploy
+
+
+build:
+  stage: build
+  artifacts:
+    paths:
+      - lib
+  script:
+    - npm install
+    - npm run build
+
+test:
+  stage: test
+  script:
+    - npm install
+    - npm run test
+
+publish:
+  stage: deploy
+  only:
+    - tags
+    - /^\d+.\d+.\d+$/
+  script:
+    - echo "@devesoft:registry=https://gitlab-p2.autobid.de/api/v4/projects/${CI_PROJECT_ID}/packages/npm/" > .npmrc
+    - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - cat .npmrc
+    - npm publish
