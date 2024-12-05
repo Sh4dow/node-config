@@ -10,10 +10,10 @@ export default class Config extends EventEmmiter {
         path: '',
         envFiles: [],
         envSwitch: 'NODE_ENV',
+        envCliPrefix: 'NODE_CONFIG_',
         env: '',
     };
-    env = '';
-    cliPrefix = 'NODE_CONFIG_';
+
     private configObject: Record<string, unknown> = {};
 
     /**
@@ -27,7 +27,7 @@ export default class Config extends EventEmmiter {
     constructor(configTarget: string | Record<string, unknown>, configOptions?: IConfigOptions) {
         super();
 
-        let options: IConfigOptions = {envSwitch: 'NODE_ENV'};
+        let options: IConfigOptions = {envSwitch: 'NODE_ENV', envCliPrefix: 'NODE_CONFIG_'};
 
         if (configTarget && configOptions) {
             if (typeof configTarget === 'object' && typeof configOptions === 'object') {
@@ -90,7 +90,7 @@ export default class Config extends EventEmmiter {
      * @returns {Array <String>} path of config node
      */
     envVariable(arg: string): string[] {
-        const configName = arg.replace(this.cliPrefix, '').replace('_', '.');
+        const configName = arg.replace(this.options.envCliPrefix, '').replace('_', '.');
         const lowerConfigName = configName.toLowerCase(); // lower name
         const vars = lowerConfigName.split('.'); // array of config name for iteration and fing config node
 
@@ -363,7 +363,7 @@ export default class Config extends EventEmmiter {
      */
     private readEnv(): void {
         for (const arg of Object.keys(process.env)) {
-            if (arg.startsWith(this.cliPrefix)) {
+            if (arg.startsWith(this.options.envCliPrefix)) {
                 const configNamePath = this.envVariable(arg);
 
                 if (configNamePath.length > 0) {
