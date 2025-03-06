@@ -4,6 +4,14 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [0.11.1](https://gitlab-p2.autobid.de/node/config/compare/0.11.0...0.11.1) (2025-03-06)
+### Bug Fixes
+
+* Longer env parameters was not detected ([9640db](https://gitlab-p2.autobid.de/node/config/commit/9640db3a6afd2c9a898070b201e8666b54ba68d2))
+
+
+---
+
 ## [0.11.0](https://gitlab-p2.autobid.de/node/config/compare/0.10.8...0.11.0) (2024-12-05)
 ### Features
 
