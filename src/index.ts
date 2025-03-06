@@ -90,20 +90,21 @@ export default class Config extends EventEmmiter {
      * @returns {Array <String>} path of config node
      */
     envVariable(arg: string): string[] {
-        const configName = arg.replace(this.options.envCliPrefix, '').replace('_', '.');
+        const configName = arg.replace(this.options.envCliPrefix, '').replaceAll('_', '.');
         const lowerConfigName = configName.toLowerCase(); // lower name
         const vars = lowerConfigName.split('.'); // array of config name for iteration and fing config node
-
         let configReference = this.configObject; // reference to config object
         const configNamePath: string[] = [];
 
-        for (let a = 0; a < lowerConfigName.length; a++) {
-            for (const index of Object.keys(configReference)) {
-                if (index.toLowerCase() === vars[a]) {
-                    // found matching index
-                    configNamePath.push(index);
-                    configReference = configReference[index] as Record<string, unknown>;
-                    break;
+        for (let a = 0; a < vars.length; a++) {
+            if (typeof configReference == 'object' && !Array.isArray(configReference) && configReference !== null) {
+                for (const index of Object.keys(configReference)) {
+                    if (index.toLowerCase() === vars[a]) {
+                        // found matching index
+                        configNamePath.push(index);
+                        configReference = configReference[index] as Record<string, unknown>;
+                        break;
+                    }
                 }
             }
         }
