@@ -1,0 +1,4 @@
+make[1]: Entering directory '/home/tb/service/node/config'
+ * [ 2db143e ] Merge tag '0.11.0' into develop (Tomasz Budzyński)
+ * [ 9640db3 ] fix: longer env parameters was not detected (Tomasz Budzyński)
+make[1]: Leaving directory '/home/tb/service/node/config'
